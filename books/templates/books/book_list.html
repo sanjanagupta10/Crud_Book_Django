@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 100%;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f7f7f7;
+        }
+        .actions a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>View All Books</h1>
+        
+        <div class="search-container">
+            <form action="{% url 'book_search' %}" method="GET">
+                <input type="text" name="q" id="search" placeholder="Search for books...">
+                <button type="submit">Search</button>
+            </form>
+            <a href="{% url 'book_create' %}">
+                <button>Add New Book</button>
+            </a>
+        </div>
+        
+        <table id="bookTable">
+            <tr>
+                <th>ISBN</th>
+                <th>Publisher</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Cost</th>
+                <th>Actions</th>
+            </tr>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.date }}</td>
+                <td>{{ book.cost }}</td>
+                <td class="actions">
+                    <a href="{% url 'book_update' book.pk %}">Edit</a>
+                    <a href="{% url 'book_delete' book.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
