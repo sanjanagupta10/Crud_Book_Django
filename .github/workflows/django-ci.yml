@@ -17,7 +17,7 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: sanjana
           POSTGRES_DB: Book_Djangodb
         ports:
           - 5432:5432
@@ -39,7 +39,7 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        
 
     - name: Set Environment Variables
       run: echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> $GITHUB_ENV
@@ -49,18 +49,18 @@ jobs:
     - name: Apply Migrations
       env:
         POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
+        POSTGRES_PASSWORD: sanjana
         POSTGRES_DB: Book_Djangodb
         DATABASE_URL: postgres://postgres:postgres@localhost:5432/Book_Djangodb
-      run: python manage.py migrate
+      run: python3 manage.py migrate
 
     - name: Run Tests
       env:
         POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
+        POSTGRES_PASSWORD: sanjana
         POSTGRES_DB: Book_Djangodb
         DATABASE_URL: postgres://postgres:postgres@localhost:5432/Book_Djangodb
-      run: python manage.py test
+      run: python3 manage.py test
 
     - name: Collect Static Files (Optional for Deployment)
       run: python manage.py collectstatic --noinput
